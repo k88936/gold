@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::{Result};
 use clap::{Parser, Subcommand};
 
 pub mod config;
@@ -69,10 +69,7 @@ async fn main() -> Result<()> {
                 config.set_override(&key, &value);
             }
 
-            // Validate configuration before proceeding
-            config.validate()
-                .with_context(|| "Configuration validation failed")?;
-
+            // Create storage backend (validation happens in the constructor)
             let storage_backend: Box<dyn StorageBackend> = match storage.as_str() {
                 "s3" => Box::new(S3Storage::new(&config).await?),
                 "webdav" => {

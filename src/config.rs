@@ -60,20 +60,4 @@ impl Config {
             .or(self.s3_endpoint.as_deref())
     }
 
-    /// Validate that all required configuration is present
-    pub fn validate(&self) -> Result<()> {
-        if self.get_access_key().is_empty() {
-            anyhow::bail!("ACCESS_KEY cannot be empty");
-        }
-        if self.get_secret_key().is_empty() {
-            anyhow::bail!("SECRET_KEY cannot be empty");
-        }
-        if self.get_bucket_name().is_empty() {
-            anyhow::bail!("BUCKET_NAME cannot be empty");
-        }
-        if self.get_aws_region().is_empty() {
-            anyhow::bail!("AWS_REGION cannot be empty");
-        }
-        Ok(())
-    }
 }
